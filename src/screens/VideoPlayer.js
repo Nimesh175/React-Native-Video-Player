@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useEffect , useState, useRef } from 'react';
 import { StyleSheet, View, Platform, Text ,TouchableHighlight} from 'react-native';
 // import MediaControls, { PLAYER_STATES } from 'react-native-media-controls';
 import MediaControls, { PLAYER_STATES } from '../components/react-native-media-controls_2.3.0/src/index.tsx';
@@ -42,13 +42,27 @@ const VideoPlayer = ({url , vidWidth="100%" , vidHeight=300 } ) => {
     // const [playerState, setPlayerState] = useState(PLAYER_STATES.PAUSED);
     const [isLoading, setIsLoading] = useState(true);
 
+
+    useEffect(() => {
+        if (currentTime === duration) {
+            videoPlayer?.current.seek(0);
+            setPaused(true)
+        }
+    }, [currentTime])
+
+
+
+
     // This function is triggered when the user released the player slider.
     const onSeek = (seek) => {
         videoPlayer?.current.seek(seek);
+        
     };
 
     // This function is triggered when the user interact with the player slider.
-    const onSeeking = (currentVideoTime) => setCurrentTime(currentVideoTime);
+    const onSeeking = (currentVideoTime) => {
+        setCurrentTime(currentVideoTime);
+    }
 
     // This function is triggered when the play/pause button is pressed.
     const onPaused = (newState) => {
@@ -116,7 +130,7 @@ const VideoPlayer = ({url , vidWidth="100%" , vidHeight=300 } ) => {
 
     // for backword button
     const goBackword = () =>{
-        let newTime = (duration-10) < 0 ? currentTime - skipTime_seconds : currentTime;
+        let newTime = (duration-10) > 0 ? currentTime - skipTime_seconds : currentTime;
         //call the onSeek function with update time
         onSeek(newTime);
 
