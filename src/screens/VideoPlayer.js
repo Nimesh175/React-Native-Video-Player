@@ -1,16 +1,16 @@
 
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Platform, Text ,TouchableHighlight, Button, Alert } from 'react-native';
+import { StyleSheet, View, Platform, Text ,TouchableHighlight} from 'react-native';
 import MediaControls, { PLAYER_STATES } from 'react-native-media-controls';
 import Video from 'react-native-video';
 import Orientation from 'react-native-orientation-locker';
-import Slider from "react-native-smooth-slider";
+import Feather from 'react-native-vector-icons/Feather';
 
 // const screenHeight = Dimensions.get('screen').height;
 // const screenWidth = Dimensions.get('screen').width;
 
 // import Our constants propeties module
-import { dimensions } from '../constant/constants';
+import { dimensions , _getShadows } from '../constant/constants';
 
 const screenHeight = dimensions.fullHeight;
 const screenWidth = dimensions.fullWidth;
@@ -106,9 +106,32 @@ const VideoPlayer = () => {
         height : isFullScreen ? '100%' : 300,
         width: '100%',
     }
+    const frontShadowLayer01={
+        position : 'absolute',
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderColor: 'rgba(0,0,0,0)',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        top: '125%', 
+        left: '12%',
+          
+        
+    }
+
+     const  frontShadowLayer02 = {
+        position : 'absolute',
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderColor: 'rgba(0,0,0,0)',
+        justifyContent: 'center',
+          alignItems: 'center',
+        
+          top: '125%', 
+          right : '12%'
+    }
 
     return (
-        <View >   
+        <View style={styles.container}>   
             <Video
                 onEnd={onEnd}
                 onLoad={onLoad}
@@ -117,8 +140,9 @@ const VideoPlayer = () => {
                 onProgress={onProgress}
                 paused={paused}
                 ref={(ref) => (videoPlayer.current = ref)}
-                resizeMode={'cover'}
-                source={{uri : 'https://www.radiantmediaplayer.com/media/big-buck-bunny-360p.mp4'}}
+                resizeMode={isFullScreen ? 'contain' : 'cover'}
+                // source={{uri : 'https://www.radiantmediaplayer.com/media/big-buck-bunny-360p.mp4'}}
+                source={video}
                 style={backgroundVideo}
             />
             <MediaControls
@@ -135,11 +159,57 @@ const VideoPlayer = () => {
                 playerState={playerState}
                 style={isFullScreen ? styles.backgroundVideoFullScreen :backgroundVideo}
                 // sliderStyle={isFullScreen ? { containerStyle: styles.mediaControls, thumbStyle: {}, trackStyle: {} } : { containerStyle: {}, thumbStyle: {}, trackStyle: {} }}
-            />
+            >
+
+                <MediaControls.Toolbar>
+                    
+                    <TouchableHighlight onPress={()=> console.log('clicked 1')}   style={frontShadowLayer01}  underlayColor= 'rgba(0,0,0,0.2)' >
+                        <View>
+                            <Feather name="chevrons-left" style={{ fontSize : 48, color : 'rgba(0,0,0,0.9)'}}/>
+                        </View>
+                    </TouchableHighlight>
+                    
+                    <TouchableHighlight onPress={()=> console.log('clicked 2')}   style={frontShadowLayer02}  underlayColor= 'rgba(0,0,0,0.2)' >
+                        <View>
+                            <Feather name="chevrons-right" style={{ fontSize : 48, color : 'rgba(0,0,0,0.9)'}}/>
+                        </View>
+                    </TouchableHighlight>
+                            
+                </MediaControls.Toolbar>
+
+            </MediaControls>
 
 
 
 
+         
+
+{/* 
+            {
+                isLoading ?
+                    <>
+
+                        <TouchableHighlight onPress={()=> console.log('clicked 1')}   style={frontShadowLayer01}  underlayColor= 'rgba(0,0,0,0.1)' >
+                        <View>
+                            <Feather name="chevrons-left" style={{ fontSize : 48, color : 'rgba(0,0,0,0.4)'}}/>
+                        </View>
+                      </TouchableHighlight>
+            
+                    <TouchableHighlight onPress={()=> console.log('clicked 2')}   style={frontShadowLayer02}  underlayColor= 'rgba(0,0,0,0.1)' >
+                        <View>
+                            <Feather name="chevrons-right" style={{ fontSize : 48, color : 'rgba(0,0,0,0.4)'}}/>
+                        </View>
+                    </TouchableHighlight>
+
+
+
+                    </>   : null
+            }
+             */}
+
+
+
+       
  
 
         </View>
@@ -148,7 +218,12 @@ const VideoPlayer = () => {
 };
 
 const styles = StyleSheet.create({
-    
+    container: {
+        ..._getShadows,
+        borderWidth: 0.2,
+        borderColor : 'rgba(0,0,0,0.5)'
+    },
+ 
     mediaControls: {
         width: screenHeight - 170,
         height: '100%',
@@ -161,9 +236,7 @@ const styles = StyleSheet.create({
         // height: dimensions.fullHeight,
         // width : dimensions.fullWidth,
     },
-    toolbar: {
-        
-    }
+
 });
 
 

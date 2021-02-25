@@ -134,8 +134,8 @@ export const imageSizes = {
     },
 }
 
-export const getShadows = {
-    elevation: 2,
+export const _getShadows = {
+    elevation: 1,
     zIndex: 10,
     shadowColor: 'black',
     shadowOffset: { width: 2, height: 2, },

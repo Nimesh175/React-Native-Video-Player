@@ -130,7 +130,6 @@
 
 
 
-
 import React from 'react'
 import { Text, View } from 'react-native'
 import VideoPlayer from './screens/VideoPlayer'
@@ -141,6 +140,8 @@ const App = () => {
     <View>
     {/* <Text>Dinuka nimesh</Text> */}
       <VideoPlayer />
+
+  
     </View>
   )
 }
