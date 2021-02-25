@@ -1,10 +1,10 @@
 
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Platform, Text ,TouchableHighlight} from 'react-native';
-import MediaControls, { PLAYER_STATES } from 'react-native-media-controls';
+// import MediaControls, { PLAYER_STATES } from 'react-native-media-controls';
+import MediaControls, { PLAYER_STATES } from '../components/react-native-media-controls_2.3.0/src/index.tsx';
 import Video from 'react-native-video';
 import Orientation from 'react-native-orientation-locker';
-import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // const screenHeight = Dimensions.get('screen').height;
@@ -16,10 +16,17 @@ import { dimensions , _getShadows } from '../constant/constants';
 const screenHeight = dimensions.fullHeight;
 const screenWidth = dimensions.fullWidth;
 
-const VideoPlayer = () => {
 
+
+
+
+const VideoPlayer = (props ) => {
+  
     const video = require('../assets/abc.mp4');
-     const skipTime_seconds = 10;
+    // let video=props.url
+    const skipTime_seconds = 10;
+
+
 
     // We will use this hook to get video current time and change it throw the player bar.
     const videoPlayer = useRef(null);
@@ -32,7 +39,7 @@ const VideoPlayer = () => {
     const [paused, setPaused] = useState(true);
 
     const [currentTime, setCurrentTime] = useState(0);
-    const [playerState, setPlayerState] = useState(PLAYER_STATES.PAUSED);
+    // const [playerState, setPlayerState] = useState(PLAYER_STATES.PAUSED);
     const [isLoading, setIsLoading] = useState(true);
 
     // This function is triggered when the user released the player slider.
@@ -46,7 +53,7 @@ const VideoPlayer = () => {
     // This function is triggered when the play/pause button is pressed.
     const onPaused = (newState) => {
         setPaused(!paused);
-        setPlayerState(newState);
+        // setPlayerState(newState);
     };
 
     /**
@@ -57,10 +64,10 @@ const VideoPlayer = () => {
         videoPlayer?.current.seek(0);
         setCurrentTime(0);
         if (Platform.OS === 'android') {
-            setPlayerState(PLAYER_STATES.PAUSED);
+            // setPlayerState(PLAYER_STATES.PAUSED);
             setPaused(true);
         } else {
-            setPlayerState(PLAYER_STATES.PLAYING);
+            // setPlayerState(PLAYER_STATES.PLAYING);
             setPaused(false);
         }
     };
@@ -85,7 +92,7 @@ const VideoPlayer = () => {
 
     // This function is triggered when the player reaches the end of the media.
     const onEnd = () => {
-        setPlayerState(PLAYER_STATES.ENDED);
+        // setPlayerState(PLAYER_STATES.ENDED);
         setCurrentTime(duration);
     };
 
@@ -136,7 +143,7 @@ const VideoPlayer = () => {
         borderColor: 'rgba(0,0,0,0)',
         justifyContent: 'center',
         alignItems: 'center',
-        top: isFullScreen ? '208%' : '205%',
+        top: isFullScreen ? '208%' : '201%',
         left: isFullScreen ? '27%' : '26%',
         padding: 10,
         paddingHorizontal : 18,
@@ -149,7 +156,7 @@ const VideoPlayer = () => {
         borderColor: 'rgba(0,0,0,0)',
         justifyContent: 'center',
         alignItems: 'center',
-        top: isFullScreen ? '207%' : '205%',
+        top: isFullScreen ? '207%' : '201%',
         right : isFullScreen ? '27%' : '26%',
         padding: 10,
         paddingHorizontal : 18,
@@ -162,10 +169,11 @@ const VideoPlayer = () => {
         borderColor: 'rgba(0,0,0,0)',
         justifyContent: 'center',
         alignItems: 'center',
-        top:  !isFullScreen ?'202%' : '207%',
-        right :  !isFullScreen ?'42%' : '45.5%',
-        padding: 12,
-        paddingHorizontal : 18,
+        top:  !isFullScreen ?'190%' : '199%',
+        right :  !isFullScreen ?'40%' : '45%',
+        paddingBottom : 20,
+        paddingTop : 20,
+        paddingHorizontal : 25,
     }
 
     return (
@@ -179,8 +187,7 @@ const VideoPlayer = () => {
                 paused={paused}
                 ref={(ref) => (videoPlayer.current = ref)}
                 resizeMode={isFullScreen ? 'contain' : 'cover'}
-                source={{uri : 'https://www.radiantmediaplayer.com/media/big-buck-bunny-360p.mp4'}}
-                // source={video}
+                source={video}
                 style={backgroundVideo}
             />
             <MediaControls
@@ -194,7 +201,6 @@ const VideoPlayer = () => {
                 onSeek={onSeek}
                 onSeeking={onSeeking}
                 mainColor={'rgba(0,0,0,0)'}
-                playerState={playerState}
                 style={isFullScreen ? styles.backgroundVideoFullScreen :backgroundVideo}
                 // sliderStyle={isFullScreen ? { containerStyle: styles.mediaControls, thumbStyle: {}, trackStyle: {} } : { containerStyle: {}, thumbStyle: {}, trackStyle: {} }}
             >

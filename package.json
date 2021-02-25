@@ -13,7 +13,6 @@
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-gesture-handler": "^1.10.2",
-    "react-native-media-controls": "^2.3.0",
     "react-native-orientation-locker": "^1.2.0",
     "react-native-responsive-fontsize": "^0.5.0",
     "react-native-slider": "^0.11.0",
