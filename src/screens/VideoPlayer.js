@@ -20,10 +20,10 @@ const screenWidth = dimensions.fullWidth;
 
 
 
-const VideoPlayer = (props ) => {
+const VideoPlayer = ({url , vidWidth="100%" , vidHeight=300 } ) => {
   
-    const video = require('../assets/abc.mp4');
-    // let video=props.url
+    // const video = require('../assets/abc.mp4');
+    let video=url
     const skipTime_seconds = 10;
 
 
@@ -116,14 +116,14 @@ const VideoPlayer = (props ) => {
 
     // for backword button
     const goBackword = () =>{
-        let newTime = currentTime - skipTime_seconds;
+        let newTime = (duration-10) < 0 ? currentTime - skipTime_seconds : currentTime;
         //call the onSeek function with update time
         onSeek(newTime);
 
     }
     // for forwad button
     const goForward= () =>{
-        let newTime = currentTime + skipTime_seconds;
+        let newTime = (duration-10) >currentTime ? currentTime + skipTime_seconds : currentTime;
         //call the onSeek function with update time
         onSeek(newTime);
     }
@@ -132,8 +132,8 @@ const VideoPlayer = (props ) => {
 
     // for style the components
     const backgroundVideo = {
-        height : isFullScreen ? '100%' : 300,
-        width: '100%',
+        height : isFullScreen ? '100%' :vidHeight,
+        width: vidWidth,
     }
 
     // for style the components
